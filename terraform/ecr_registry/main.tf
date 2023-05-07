@@ -1,18 +1,6 @@
-# resource "aws_ecr_repository" "repository" {
-#   name                 = var.registry_name
-#   //image_tag_mutability = "MUTABLE"
-
-#   tags                 = {
-#     Name = var.registry_name
-#   }
-
-#   image_scanning_configuration {
-#     scan_on_push = true
-#   }
-# }
 
 data "aws_ecr_repository" "repository" {
-   name = "fargate-cicd-pipeline"
+   name = "aws-deploy-cicd-repo"
 }
 
 
