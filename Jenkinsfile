@@ -2,6 +2,7 @@ pipeline {
 	agent any
 
 	environment {
+		PATH = "${PATH}:${getTerraformPath()}"
 		AWS_DEFAULT_REGION='us-east-1'
 		AWS_CREDENTIALS = credentials('aws-auth')
 	}
@@ -78,4 +79,10 @@ def createECR(repoName){
 
 def createDynamoDB(dynamodbName){
     sh returnStatus: true, script: "aws dynamodb create-table --table-name ${dynamodbName} --attribute-definitions AttributeName=LockID,AttributeType=S --key-schema AttributeName=LockID,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5"
+}
+
+
+def getTerraformPath(){
+	def tfHome = tool name: 'terraform:1.4.6', type: 'terraform'
+	return tfHome
 }
