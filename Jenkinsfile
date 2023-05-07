@@ -64,11 +64,11 @@ pipeline {
 			}
 		}
 
-		stage("k8s Deployment"){
-			steps {
-				sh "kubectl get nodes"
-			}
-		}
+		// stage("k8s Deployment"){
+		// 	steps {
+		// 		sh "kubectl get nodes"
+		// 	}
+		// }
 		
 
 	}
