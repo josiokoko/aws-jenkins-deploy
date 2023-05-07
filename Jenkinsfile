@@ -51,13 +51,15 @@ pipeline {
 
 		stage("AWS ECR Authentication") {
 			steps{
-				sh "echo AWS ECR Authentication..."
+				sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${registry_id}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
 			}
 		}
 
 		stage("Deploy App Image") {
 			steps{
-				sh "echo Deploy App Image..."
+				sh "docker image build -t ${repository_name}:${BUILD_ID} ."
+                sh "docker tag ${repository_name}:${BUILD_ID} ${repository_url}:${BUILD_ID}"
+                sh "docker push ${repository_url}:${BUILD_ID}"
 			}
 		}
 		
