@@ -62,6 +62,10 @@ pipeline {
                 sh "docker push ${repository_url}:${BUILD_ID}"
 			}
 		}
+
+		stage("k8s Deployment"){
+			sh "kubect get nodes"
+		}
 		
 
 	}
