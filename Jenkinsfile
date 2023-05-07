@@ -5,6 +5,7 @@ pipeline {
 		PATH = "${PATH}:${getTerraformPath()}"
 		AWS_DEFAULT_REGION='us-east-1'
 		AWS_CREDENTIALS = credentials('aws-auth')
+		KUBECONFIG="${KUBECONFIG}:${HOME}/.kube/config"
 	}
 
 	stages {
