@@ -64,7 +64,7 @@ pipeline {
 		}
 
 		stage("k8s Deployment"){
-			sh "kubect get nodes"
+			sh "kubectl get nodes"
 		}
 		
 
