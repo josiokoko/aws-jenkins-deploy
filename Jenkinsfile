@@ -69,9 +69,13 @@ pipeline {
 		stage("k8s Deployment"){
 			steps {
 				script {
-					sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${registry_id}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
-
 					withKubeConfig(caCertificate: '', clusterName: 'vangel-app.us-east-1.eksctl.io', contextName: 'kops@vangel-app.us-east-1.eksctl.io', credentialsId: 'jenkins-deployer-credentials', namespace: '', restrictKubeConfigAccess: false, serverUrl: 'https://FCFAE07FA7607413D7749329793EFA63.gr7.us-east-1.eks.amazonaws.com') {
+						// sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${registry_id}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+						// NAMESPACE_NAME="health-check" && \
+						
+						sh 'kubectl create secret docker-registry regcred --docker-server=${registry_id}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com --docker-username=AWS --docker-password=$(aws ecr get-login-password)'
+						// --namespace=$NAMESPACE_NAME || true && \
+					
 						sh 'kubectl apply -f dnginx.yaml'
 						sh 'envsubst < dapps.yaml | kubectl apply -f -'
 					}
