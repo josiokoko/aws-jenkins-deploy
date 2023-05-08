@@ -102,3 +102,10 @@ def getTerraformPath(){
 	def tfHome = tool name: 'terraform:1.4.6', type: 'terraform'
 	return tfHome
 }
+
+
+def registry_id
+
+def repository_name
+
+def repository_url
