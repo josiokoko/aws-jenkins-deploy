@@ -61,7 +61,8 @@ pipeline {
 				sh "docker image build -t ${repository_name}:${BUILD_ID} ."
                 sh "docker tag ${repository_name}:${BUILD_ID} ${repository_url}:${BUILD_ID}"
                 sh "docker push ${repository_url}:${BUILD_ID}"
-				sh returnStatus: true, script: "docker image rmi -f \$(docker image ls -aq)"
+				sh "docker image rmi -f ${repository_name}:${BUILD_ID}"
+				sh "docker image rmi -f ${repository_url}:${BUILD_ID}"
 			}
 		}
 
