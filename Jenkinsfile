@@ -64,11 +64,13 @@ pipeline {
 			}
 		}
 
-		// stage("k8s Deployment"){
-		// 	steps {
-		// 		sh "kubectl get nodes"
-		// 	}
-		// }
+		stage("k8s Deployment"){
+			steps {
+				withKubeConfig(caCertificate: '', clusterName: 'vangel-app.us-east-1.eksctl.io', contextName: 'kops@vangel-app.us-east-1.eksctl.io', credentialsId: 'jenkins-deployer-credentials', namespace: '', restrictKubeConfigAccess: false, serverUrl: 'https://FCFAE07FA7607413D7749329793EFA63.gr7.us-east-1.eks.amazonaws.com') {
+                    sh 'kubectl apply -f dnginx.yaml'
+                }
+			}
+		}
 		
 
 	}
